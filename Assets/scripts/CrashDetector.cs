@@ -8,9 +8,7 @@ public class CrashDetector : MonoBehaviour
     [SerializeField] ParticleSystem CrashEffect;
         CircleCollider2D playerHead;
         [SerializeField] float ReLoadSceneTime =1.1f;
-        [SerializeField] AudioClip crashSFX;
 
-        bool hasCrashed=false;
     private void Start()
     {
         playerHead = GetComponent<CircleCollider2D>();
@@ -18,13 +16,10 @@ public class CrashDetector : MonoBehaviour
  
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Ground" && playerHead.IsTouching(other.collider)&& !hasCrashed)
+        if (other.gameObject.tag == "Ground" && playerHead.IsTouching(other.collider))
 
         {
-            hasCrashed=true;
-            FindObjectOfType<PlayerControler>().DisableControls();
             CrashEffect.Play();
-            GetComponent<AudioSource>().PlayOneShot(crashSFX);
             Invoke("ReloadScene",ReLoadSceneTime);
         }
     }
